@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Anotaciones</title>
+    <style>
+        /* Estilos CSS para la barra de navegación */
+        ul.navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333; /* Color de fondo de la barra de navegación */
+        }
+
+        ul.navbar li {
+            float: left;
+        }
+
+        ul.navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            height: 100%; /* Ajusta la altura de los elementos para centrar verticalmente */
+        }
+
+        ul.navbar li a:hover {
+            background-color: #444; /* Color de fondo al pasar el cursor por encima del enlace */
+        }
+
+        /* Estilos para el formulario de anotaciones */
+        h1 {
+            text-align: center;
+            color: #333; /* Color del encabezado del formulario */
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        form select,
+        form textarea {
+            width: calc(100% - 22px); /* Resta el padding y el borde */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+        }
+
+        form input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto; /* Centrar horizontalmente */
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<ul class="navbar">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Acerca de</a></li>
+    <li><a href="#">Contacto</a></li>
+</ul>
+
+<!-- Formulario de Anotaciones -->
+<h1>Formulario de Anotaciones</h1>
+    
+<form method="post">
+    {% csrf_token %}
+
+    <label for="usuario">Selecciona un usuario:</label>
+    <select name="usuario" id="usuario">
+        {% for user in users %}
+            <option value="{{ user.first_name }} {{ user.last_name }}">{{ user.first_name }} {{ user.last_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="anotacion">Anotación:</label>
+    <textarea name="anotacion" id="anotacion"></textarea>
+
+    <input type="submit" value="Guardar Anotación">
+</form>
+
+</body>
+</html>

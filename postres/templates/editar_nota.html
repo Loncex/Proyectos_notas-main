@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Editar Notas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4 text-primary">Editar Notas</h2>
+
+        <form method="post" action="{% url 'notasedit' %}">
+            {% csrf_token %}
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Apoderado</th>
+                        <th>Asignatura y Curso</th>
+                        <th>Nota</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nota in notas_data %}
+                        <tr>
+                            <td>{{ nota.nota_id }}</td>
+                            <td>{{ nota.apoderado_info.nombreap }} {{ nota.apoderado_info.apellidoap }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="asignatura_id">Asignatura:</label>
+                                    <select class="form-control" name="asignatura_id">
+                                        {% for asignatura in asignaturas %}
+                                            <option value="{{ asignatura.id }}" {% if nota.asignatura_info.id == asignatura.id %}selected{% endif %}>
+                                                {{ asignatura.nombre_asignatura }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    
+                                    <label for="curso_id">Curso:</label>
+                                    <select class="form-control" name="curso_id">
+                                        {% for curso in cursos %}
+                                            <option value="{{ curso.id }}" {% if nota.curso_info.id == curso.id %}selected{% endif %}>
+                                                {{ curso.nombre_curso }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>
+                            <td>{{ nota.nota }}</td>
+                            <td>{{ nota.usuario_info.first_name }} {{ nota.usuario_info.last_name }}</td>
+                            <td>
+                                <input type="hidden" name="accion" value="editar">
+                                <input type="hidden" name="nota_id" value="{{ nota.nota_id }}">
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmarEliminar('{{ nota.nota_id }}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        function confirmarEliminar(notaId) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta nota?')) {
+                // Agrega un campo de entrada oculto al formulario para indicar la acción de eliminación
+                var form = document.querySelector('form');
+                var accionInput = document.createElement('input');
+                accionInput.type = 'hidden';
+                accionInput.name = 'accion';
+                accionInput.value = 'eliminar';
+                
+                var notaIdInput = document.createElement('input');
+                notaIdInput.type = 'hidden';
+                notaIdInput.name = 'nota_id';
+                notaIdInput.value = notaId;
+    
+                form.appendChild(accionInput);
+                form.appendChild(notaIdInput);
+    
+                // Envía el formulario
+                form.submit();
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+</body>
+</html>

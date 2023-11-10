@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Editar Nota</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h1 class="display-4 text-center mb-4 text-primary">Editar Nota</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="nueva_apoderado_id">Apoderado:</label>
+                <input type="text" class="form-control" id="nueva_apoderado_id" name="nueva_apoderado_id" value="{{ apoderado_info.nombreap }} {{ apoderado_info.apellidoap }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="nueva_asignatura_id">Asignatura:</label>
+                <input type="text" class="form-control" id="nueva_asignatura_id" name="nueva_asignatura_id" value="{{ asignatura_info.nombre_asignatura }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="nueva_curso_id">Curso:</label>
+                <input type="text" class="form-control" id="nueva_curso_id" name="nueva_curso_id" value="{{ curso_info.nombre_curso }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="nueva_nota">Nota:</label>
+                <input type="text" class="form-control" id="nueva_nota" name="nueva_nota" value="{{ nota_data.nota }}">
+            </div>
+
+            <div class="form-group">
+                <label for="nueva_usuario_id">Usuario:</label>
+                <input type="text" class="form-control" id="nueva_usuario_id" name="nueva_usuario_id" value="{{ usuario_info.first_name }} {{ usuario_info.last_name }}" readonly>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+</body>
+</html>
